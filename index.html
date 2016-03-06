@@ -65,7 +65,9 @@
 		user ns aim to improve security when running containers (in production). The basic problem user ns are trying to solve is that
 		</aside>
                 <p class="fragment roll-in">Processes inside containers run (mostly) as root</p>
-                <p class="fragment roll-in">Remap the root user inside the container</p>
+		<aside class="notes">
+		remap the root user inside the container
+		</aside>
                 <p class="fragment roll-in">In user namaspaces: user 0 inside == user 100000 outside</p>
 		<aside class="notes">
 		improved security
@@ -92,8 +94,12 @@ dockremap:100000:65536 # root is UID 165536 outside the container
 
 	      <section>
                 <h3>User Namespaces: pitfalls</h3>
+		<aside class="notes">
+		containers share the subuid/subgid ranges
+                No real separation between containers cause ranges are shared
+		</aside>
 		<p class="fragment roll-in">Daemon option: no per container</p>
-		<p class="fragment roll-in">No containers with <code>--privileged</code></p>
+		<p class="fragment roll-in">No containers with <code>--privileged</code> (WIP)</p>
 		<aside class="notes">
 		overlay fs is too buggy and not even POSIX complaint
 		</aside>
@@ -101,10 +107,6 @@ dockremap:100000:65536 # root is UID 165536 outside the container
                 <p class="fragment roll-in">Solution: chown -R UID:GID</p>
 		<p class="fragment roll-in">Images must be <i>reconfigured</i></p>
                 <p class="fragment roll-in">Share storage between containers?</p>
-		<aside class="notes">
-		containers share the subuid/subgid ranges
-		</aside>
-                <p class="fragment roll-in">No real separation between containers</p>
 		<aside class="notes">
 		user ns is so new...so probably and maybe
 		admins that don't trust userns (still new, can be exploited?) can either disable support at kernel build time
@@ -171,27 +173,16 @@ plugins retries
                 <p class="fragment roll-in">Might allow us to allow non privileged users to<br>talk to the Docker Daemon</p>
               </section>
 	      <section data-transition="fade">
-                <h3>Configuration</h3>
-		<p>Tricky</p>
-                <p class="fragment roll-in">
-		<pre>
-[actions]
-start = ["container*"]
-stop = ["container*"]
-pull = ["rhel:latest", "fedora:*"]
-push = ["*"]
+                <h3>Logging drivers</h3>
+              </section>
 
-[roles]
-admin = ["*"]
-simple_user = ["start", "stop"]
-bot = ["search"]
+	      <section data-transition="fade">
+                <h3>Security profiles</h3>
+                <p class="fragment roll-in">Seccomp, Apparmor</p>
+              </section>
 
-# either users or groups
-[users]
-dwalsh = ["simple_user"]
-runcom = ["admin"]
-		</pre>
-		</p>
+	      <section data-transition="fade">
+                <h3>Network plugins</h3>
               </section>
 
 	      <section data-transition="fade">
