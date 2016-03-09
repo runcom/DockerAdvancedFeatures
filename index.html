@@ -160,40 +160,40 @@ plugins retries
 
                 <p class="fragment roll-in">Plugins implements a given API - see github.com/docker/go-plugins-helper</p>
               </section>
-	      <section data-transition="fade">
-		      <h3>Authorization Plugins</h3>
-                <p class="fragment roll-in">Docker 1.10 introduced authorization plugins</p>
-                <p class="fragment roll-in">Docker has no authentication plugin yet... #18514</p>
-                <p class="fragment roll-in">Plugin analyses action and responds with success of failure</p>
-	      </section>
-	      <section data-transition="fade">
-                <h3>No Volume Plugin</h3>
-                <p class="fragment roll-in">Requested by OpenShift.<br>Blocks images which container builtin volumes</p>
-		<p class="fragment roll-in"><a href="https://github.com/projectatomic/docker-novolume-plugin">github.com/projectatomic/docker-novolume-plugin</a></p>
-              </section>
-	      <section data-transition="fade">
-                <h3>Block RHEL Push Plugin</h3>
-                <p class="fragment roll-in">Block pushing RHEL content to docker.io</p>
-                <p class="fragment roll-in">Replaces a big ugly patch we have in Docker</p>
-              </section>
-	      <section data-transition="fade">
-                <h3>Block Registry Plugin</h3>
-                <p class="fragment roll-in">Block every docker action that interacts with a configured registry</p>
-                <p class="fragment roll-in">Block users from accidently pushing to docker.io or redhat.io</p>
-                <p class="fragment roll-in">Shrink a big ugly patch we have in Docker</p>
-              </section>
-	      <section data-transition="fade">
-                <h3>Block CVE Plugin</h3>
-                <p class="fragment roll-in">Block starting/creating containers with known CVEs</p>
-                <p class="fragment roll-in">Atomic scan leaves a json db indicating vulnerable images</p>
-              </section>
-	      <section data-transition="fade">
-                <h3>ACL Plugin</h3>
-                <p class="fragment roll-in">Ultimate Roles Based Access Control Plugin</p>
-                <p class="fragment roll-in">Require Authentication</p>
-                <p class="fragment roll-in">Allow dwalsh to start/stop<br>container1, container2 ... containerN only</p>
-                <p class="fragment roll-in">Might allow us to allow non privileged users to<br>talk to the Docker Daemon</p>
-              </section>
+	      <!--<section data-transition="fade">-->
+		      <!--<h3>Authorization Plugins</h3>-->
+                <!--<p class="fragment roll-in">Docker 1.10 introduced authorization plugins</p>-->
+                <!--<p class="fragment roll-in">Docker has no authentication plugin yet... #18514</p>-->
+                <!--<p class="fragment roll-in">Plugin analyses action and responds with success of failure</p>-->
+	      <!--</section>-->
+	      <!--<section data-transition="fade">-->
+                <!--<h3>No Volume Plugin</h3>-->
+                <!--<p class="fragment roll-in">Requested by OpenShift.<br>Blocks images which container builtin volumes</p>-->
+		<!--<p class="fragment roll-in"><a href="https://github.com/projectatomic/docker-novolume-plugin">github.com/projectatomic/docker-novolume-plugin</a></p>-->
+              <!--</section>-->
+	      <!--<section data-transition="fade">-->
+                <!--<h3>Block RHEL Push Plugin</h3>-->
+                <!--<p class="fragment roll-in">Block pushing RHEL content to docker.io</p>-->
+                <!--<p class="fragment roll-in">Replaces a big ugly patch we have in Docker</p>-->
+              <!--</section>-->
+	      <!--<section data-transition="fade">-->
+                <!--<h3>Block Registry Plugin</h3>-->
+                <!--<p class="fragment roll-in">Block every docker action that interacts with a configured registry</p>-->
+                <!--<p class="fragment roll-in">Block users from accidently pushing to docker.io or redhat.io</p>-->
+                <!--<p class="fragment roll-in">Shrink a big ugly patch we have in Docker</p>-->
+              <!--</section>-->
+	      <!--<section data-transition="fade">-->
+                <!--<h3>Block CVE Plugin</h3>-->
+                <!--<p class="fragment roll-in">Block starting/creating containers with known CVEs</p>-->
+                <!--<p class="fragment roll-in">Atomic scan leaves a json db indicating vulnerable images</p>-->
+              <!--</section>-->
+	      <!--<section data-transition="fade">-->
+                <!--<h3>ACL Plugin</h3>-->
+                <!--<p class="fragment roll-in">Ultimate Roles Based Access Control Plugin</p>-->
+                <!--<p class="fragment roll-in">Require Authentication</p>-->
+                <!--<p class="fragment roll-in">Allow dwalsh to start/stop<br>container1, container2 ... containerN only</p>-->
+                <!--<p class="fragment roll-in">Might allow us to allow non privileged users to<br>talk to the Docker Daemon</p>-->
+              <!--</section>-->
 	      <section data-transition="fade">
                 <h3>Logging drivers</h3>
               </section>
@@ -204,7 +204,7 @@ plugins retries
               </section>
 
 	      <section data-transition="fade">
-                <h3>Network plugins</h3>
+                <h3>SELinux</h3>
               </section>
 
 	      <section data-transition="fade">
