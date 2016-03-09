@@ -69,7 +69,8 @@
 
 		user ns aim to improve security when running containers (in production). The basic problem user ns are trying to solve is that
 		</aside>
-                <p class="fragment roll-in">Processes inside containers run (mostly) as root</p>
+		<p class="fragment roll-in">Processes inside containers run (mostly) as <b>root</b></p>
+		<p class="fragment roll-in">Daemon option: <code>--userns-remap=default</code></p>
 		<!-- which root? the host root user -->
 		<aside class="notes">
 		remap the root user inside the container
@@ -83,18 +84,17 @@
 		/etc/subgid
 		</aside>
                 <!--<p class="fragment roll-in">Could drop all CAP(abilities)</p>-->
-                <p class="fragment roll-in">create a range of UIDs (for example, 60,000-61,000) that you can map into the user namespace as 0-1000</p>
+                <!--<p class="fragment roll-in">create a range of UIDs (for example, 60,000-61,000) that you can map into the user namespace as 0-1000</p>-->
                 <p class="fragment roll-in">
 		<code>
 			$ cat /etc/subuid<br />
-dockremap:100000:65536 # root is UID 165536 outside the container
+dockremap:100000:65536 # root is UID 100000 outside the container
 		</code>
 		</p>
                 <p class="fragment roll-in">The same applies to GIDs</p>
 		<aside class="notes">
 			you can manually specify ranges 10000:3345
 		</aside>
-		<p class="fragment roll-in">Docker daemon option: <code>--userns-remap=default</code></p>
 	      </section>
 
 	      <section>
@@ -103,6 +103,7 @@ dockremap:100000:65536 # root is UID 165536 outside the container
 			no net,pid == host
 			no net,ipc == container
 			no read-only container
+		<!--<p class="fragment roll-in">Daemon option: no per container</p>-->
 			volume and graph drivers - no daemon user mapping
 			</aside>
 		<p class="fragment roll-in">https://docs.docker.com/engine/reference/commandline/daemon/#user-namespace-known-restrictions</p>
@@ -111,10 +112,10 @@ dockremap:100000:65536 # root is UID 165536 outside the container
 		containers share the subuid/subgid ranges
                 No real separation between containers cause ranges are shared
 		</aside>
-		<p class="fragment roll-in">Daemon option: no per container</p>
 		<!-- run a Docker daemon inside a Docker container -->
 		<!-- This is because by default a container is not allowed to access any devices, but a “privileged” container is given access to all devices -->
 		<p class="fragment roll-in">No containers with <code>--privileged</code> (WIP)</p>
+		<p class="fragment roll-in">Not per container</p>
 		<aside class="notes">
 		no kernel level user namespaces for vfs
 		you can't mount option with a UID:GID!!!
@@ -123,12 +124,12 @@ dockremap:100000:65536 # root is UID 165536 outside the container
 		<!-- this means that to not break image cache for instance
 		images are pulled for the current remapped user under /var/lib/docker/UID:GID/
 		-->
-		<p class="fragment roll-in">Images per remapped user</p>
+		<!--<p class="fragment roll-in">Images per remapped user</p>-->
 		<!--
 		how do you share storage between containers on remote hosts if they run with
 		different remapped user
 		-->
-                <p class="fragment roll-in">Share storage between containers?</p>
+                <!--<p class="fragment roll-in">Share storage between containers?</p>-->
 		<aside class="notes">
 		user ns is so new...so probably and maybe
 		admins that don't trust userns (still new, can be exploited?) can either disable support at kernel build time
