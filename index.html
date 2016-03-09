@@ -53,32 +53,37 @@
 	      <section>
                 <h3>User Namespaces</h3>
 		<aside class="notes">
-		Everyone should know that Docker uses namespaces (kernel feature), among other things, to run what we call containers, for instance
+		Everyone should know that Docker uses namespaces (kernel features), among other things, to run what we call containers, for instance
 		uts namespace (hostname), mount namspace to give the container its known view on mount points..
 		etc etc.
 
-		The user namespace is a namespace that should allow us to get better separation between the host and the container.
+		The user namespace is a namespace that should allow us to get better separation between the host and the container . the fundamental feature of user nss is that
+		a process can
+		       have a normal unprivileged user ID outside a user namespace while at
+		              the same time having a user ID of 0 inside the namespace; in other
+			             words, the process has full privileges for operations inside the user
+				            namespace, but is unprivileged for operations outside the namespace.
 
-		Docker 1.9 first introduced, as an experimental feature, user namspaces, it's now shipped
+		Docker 1.9 firstly introduced, as an experimental feature, user namspaces, it's now shipped
 		in 1.10.x
 
 		user ns aim to improve security when running containers (in production). The basic problem user ns are trying to solve is that
 		</aside>
                 <p class="fragment roll-in">Processes inside containers run (mostly) as root</p>
+		<!-- which root? the host root user -->
 		<aside class="notes">
 		remap the root user inside the container
 		</aside>
-                <p class="fragment roll-in">In user namaspaces: user 0 inside == user 100000 outside</p>
+                <!--<p class="fragment roll-in">In user namaspaces: user 0 inside == user 100000 outside</p>-->
 		<aside class="notes">
 		improved security
 		</aside>
 		<aside class="notes">
 		/etc/subuid
 		/etc/subgid
-		Fedora doesn't have those - we're adding them!
 		</aside>
                 <!--<p class="fragment roll-in">Could drop all CAP(abilities)</p>-->
-                <p class="fragment roll-in">How: create a range of UIDs (for example, 60,000-61,000) that you can map into the user namespace as 0-1000</p>
+                <p class="fragment roll-in">create a range of UIDs (for example, 60,000-61,000) that you can map into the user namespace as 0-1000</p>
                 <p class="fragment roll-in">
 		<code>
 			$ cat /etc/subuid<br />
@@ -93,19 +98,36 @@ dockremap:100000:65536 # root is UID 165536 outside the container
 	      </section>
 
 	      <section>
-                <h3>User Namespaces: pitfalls</h3>
+                <h3>User Namespaces: the bad</h3>
 		<aside class="notes">
+			no net,pid == host
+			no net,ipc == container
+			no read-only container
+			volume and graph drivers - no daemon user mapping
+			</aside>
+		<p class="fragment roll-in">https://docs.docker.com/engine/reference/commandline/daemon/#user-namespace-known-restrictions</p>
+		<aside class="notes">
+			but the main downside right now, at least for us at RH,
 		containers share the subuid/subgid ranges
                 No real separation between containers cause ranges are shared
 		</aside>
 		<p class="fragment roll-in">Daemon option: no per container</p>
+		<!-- run a Docker daemon inside a Docker container -->
+		<!-- This is because by default a container is not allowed to access any devices, but a “privileged” container is given access to all devices -->
 		<p class="fragment roll-in">No containers with <code>--privileged</code> (WIP)</p>
 		<aside class="notes">
-		overlay fs is too buggy and not even POSIX complaint
+		no kernel level user namespaces for vfs
+		you can't mount option with a UID:GID!!!
 		</aside>
                 <p class="fragment roll-in">Lack of filesystem support</p>
-                <p class="fragment roll-in">Solution: chown -R UID:GID</p>
-		<p class="fragment roll-in">Images must be <i>reconfigured</i></p>
+		<!-- this means that to not break image cache for instance
+		images are pulled for the current remapped user under /var/lib/docker/UID:GID/
+		-->
+		<p class="fragment roll-in">Images per remapped user</p>
+		<!--
+		how do you share storage between containers on remote hosts if they run with
+		different remapped user
+		-->
                 <p class="fragment roll-in">Share storage between containers?</p>
 		<aside class="notes">
 		user ns is so new...so probably and maybe
