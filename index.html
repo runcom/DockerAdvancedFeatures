@@ -141,7 +141,7 @@ dockremap:100000:65536 # root is UID 100000 outside the container
 	      </section>
 
               <section>
-                <h3>Docker Plugins (generic)</h3>
+                <h3>Plugins</h3>
 		<!-- Docker plugins are out-of-process extensions which add capabilities to the Docker Engine.
 
 plugins can run inside or outside containers also
@@ -153,13 +153,15 @@ plugins retries
 
                 <p class="fragment roll-in">Docker has a generic Plugin API (RPC-style JSON over HTTP)</p>
 		<p class="fragment roll-in">Plugins are <i>discovered</i> (usually by name)</p>
-		<p class="fragment roll-in">Place a socket inside `/run/docker/plugins/$NAME.sock`</p>
-		<p class="fragment roll-in">Or a .spec or json spec file either under `/etc/docker/plugins` or `/usr/lib/docker/plugins`</p>
-                <p class="fragment roll-in">Configure Docker daemon to use plugin e.g. `--authorization-plugin=$NAME`</p>
-
-                <p class="fragment roll-in">Docker POST actions to the socket</p>
-
+                <p class="fragment roll-in">Configure Docker to use plugin e.g. `--authorization-plugin=$NAME`</p>
                 <p class="fragment roll-in">Plugins implements a given API - see github.com/docker/go-plugins-helper</p>
+              </section>
+              <section>
+                <h3>Plugins types</h3>
+                <p class="fragment roll-in">Volumes</p>
+                <p class="fragment roll-in">Network</p>
+                <p class="fragment roll-in">Authorization</p>
+                <p class="fragment roll-in">Authentication (yet to come)</p>
               </section>
 	      <!--<section data-transition="fade">-->
 		      <!--<h3>Authorization Plugins</h3>-->
@@ -197,6 +199,10 @@ plugins retries
               <!--</section>-->
 	      <section data-transition="fade">
                 <h3>Logging drivers</h3>
+                <p class="fragment roll-in">json file, syslog, splunk, journald, gelf, gcp, fluentd, etw, aws, amqp (coming), windows (coming) ... WHAT?</p>
+		<!-- new pr for each log driver? -->
+		<!-- external, being able to log to a tpc/unix socket and that's it -->
+                <p class="fragment roll-in">Pluggability?</p>
               </section>
 
 	      <section data-transition="fade">
